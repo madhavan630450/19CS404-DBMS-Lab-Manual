@@ -1,343 +1,177 @@
-# Experiment 5: Subqueries and Views
+# Experiment 6: Joins
 
 ## AIM
-To study and implement subqueries and views.
+To study and implement different types of joins.
 
 ## THEORY
 
-### Subqueries
-A subquery is a query inside another SQL query and is embedded in:
-- WHERE clause
-- HAVING clause
-- FROM clause
+SQL Joins are used to combine records from two or more tables based on a related column.
 
-**Types:**
-- **Single-row subquery**:
-  Sub queries can also return more than one value. Such results should be made use along with the operators in and any.
-- **Multiple-row subquery**:
-  Here more than one subquery is used. These multiple sub queries are combined by means of ‘and’ & ‘or’ keywords.
-- **Correlated subquery**:
-  A subquery is evaluated once for the entire parent statement whereas a correlated Sub query is evaluated once per row processed by the parent statement.
+### 1. INNER JOIN
+Returns records with matching values in both tables.
 
-**Example:**
+**Syntax:**
 ```sql
-SELECT * FROM employees
-WHERE salary > (SELECT AVG(salary) FROM employees);
+SELECT columns
+FROM table1
+INNER JOIN table2
+ON table1.column = table2.column;
 ```
-### Views
-A view is a virtual table based on the result of an SQL SELECT query.
-**Create View:**
+
+### 2. LEFT JOIN
+Returns all records from the left table, and matched records from the right.
+
+**Syntax:**
+
 ```sql
-CREATE VIEW view_name AS
-SELECT column1, column2 FROM table_name WHERE condition;
+SELECT columns
+FROM table1
+LEFT JOIN table2
+ON table1.column = table2.column;
 ```
-**Drop View:**
+### 3. RIGHT JOIN
+Returns all records from the right table, and matched records from the left.
+
+**Syntax:**
+
 ```sql
-DROP VIEW view_name;
+SELECT columns
+FROM table1
+RIGHT JOIN table2
+ON table1.column = table2.column;
+```
+### 4. FULL OUTER JOIN
+Returns all records when there is a match in either left or right table.
+
+**Syntax:**
+
+```sql
+SELECT columns
+FROM table1
+FULL OUTER JOIN table2
+ON table1.column = table2.column;
 ```
 
 **Question 1**
 --
-Write a SQL query that retrieve all the columns from the table "Grades", where the grade is equal to the maximum grade achieved in each subject.
-Sample table: GRADES (attributes: student_id, student_name, subject, grade)
+-- Paste Question 1 here
 
-```
-SELECT *
-FROM GRADES g
-WHERE grade = (
-    SELECT MAX(grade)
-    FROM GRADES
-    WHERE subject = g.subject
-);
-
+```sql
+-- Paste your SQL code below for Question 1
 ```
 
 **Output:**
 
-![image](https://github.com/user-attachments/assets/d3d3c6be-b5b9-40e7-aed4-091d3c825e63)
-
+![Output1](output.png)
 
 **Question 2**
 ---
-Write a SQL query to Identify customers whose city is different from the city of the customer with the highest ID
+-- Paste Question 2 here
 
-SAMPLE TABLE: customer
-```
-name             type
----------------  ---------------
-id               INTEGER
-name             TEXT
-city             TEXT
-email            TEXT
-phone            INTEGER
-```
-```
-SELECT *
-FROM customer
-WHERE city <> (
-    SELECT city
-    FROM customer
-    WHERE id = (SELECT MAX(id) FROM customer)
-);
-
+```sql
+-- Paste your SQL code below for Question 2
 ```
 
 **Output:**
 
-![image](https://github.com/user-attachments/assets/91ff9e98-1f8d-4a62-877a-5cf34ee18ee4)
-
+![Output2](output.png)
 
 **Question 3**
 ---
-Write a SQL query to retrieve all columns from the CUSTOMERS table for customers whose salary is LESS than $2500.
+-- Paste Question 3 here
 
-Sample table: CUSTOMERS
-```
-ID          NAME        AGE         ADDRESS     SALARY
-----------  ----------  ----------  ----------  ----------
-
-1          Ramesh     32              Ahmedabad     2000
-2          Khilan        25              Delhi                 1500
-3          Kaushik      23              Kota                  2000
-4          Chaitali       25             Mumbai            6500
-5          Hardik        27              Bhopal              8500
-6          Komal         22              Hyderabad       4500
-
-7           Muffy          24              Indore            10000
-
-```
-```
-SELECT *
-FROM CUSTOMERS
-WHERE SALARY < 2500;
-
+```sql
+-- Paste your SQL code below for Question 3
 ```
 
 **Output:**
 
-![image](https://github.com/user-attachments/assets/5368fd05-45e9-44ce-98b9-755023b20def)
-
+![Output3](output.png)
 
 **Question 4**
 ---
-From the following tables write a SQL query to count the number of customers with grades above the average in New York City. Return grade and count.
+-- Paste Question 4 here
 
-customer table
-```
-name         type
------------  ----------
-customer_id  int
-cust_name    text
-city         text
-grade        int
-salesman_id  int
-```
-```
-SELECT grade, COUNT(*)
-FROM customer
-WHERE  grade > (SELECT AVG(grade) FROM customer WHERE city = 'New York')
-GROUP BY grade;
-
+```sql
+-- Paste your SQL code below for Question 4
 ```
 
 **Output:**
 
-![image](https://github.com/user-attachments/assets/5ee3faa5-16e7-4f66-aa1d-3be574da237b)
-
+![Output4](output.png)
 
 **Question 5**
 ---
-Write a SQL query to retrieve all columns from the CUSTOMERS table for customers whose Address as Delhi
+-- Paste Question 5 here
 
-Sample table: CUSTOMERS
-```
-ID          NAME        AGE         ADDRESS     SALARY
-----------  ----------  ----------  ----------  ----------
-
-1          Ramesh     32              Ahmedabad     2000
-2          Khilan        25              Delhi                 1500
-3          Kaushik      23              Kota                  2000
-4          Chaitali       25             Mumbai            6500
-5          Hardik        27              Bhopal              8500
-6          Komal         22              Hyderabad       4500
-
-7           Muffy          24              Indore            10000
-```
-```
-SELECT *
-FROM CUSTOMERS
-WHERE ADDRESS = 'Delhi';
-
+```sql
+-- Paste your SQL code below for Question 5
 ```
 
 **Output:**
 
-![image](https://github.com/user-attachments/assets/80f9f243-907d-4aea-a337-6c50af79ea3f)
-
+![Output5](output.png)
 
 **Question 6**
 ---
-From the following tables write a SQL query to find the order values greater than the average order value of 10th October 2012. Return ord_no, purch_amt, ord_date, customer_id, salesman_id.
+-- Paste Question 6 here
 
-Note: date should be yyyy-mm-dd format
-
-ORDERS TABLE
-```
-name            type
-----------     ----------
-ord_no          int
-purch_amt    real
-ord_date       text
-customer_id  int
-salesman_id  int
-```
-```
-SELECT ord_no, purch_amt, ord_date, customer_id, salesman_id
-FROM ORDERS
-WHERE purch_amt > (
-    SELECT AVG(purch_amt)
-    FROM ORDERS
-    WHERE ord_date = '2012-10-10'
-);
-
+```sql
+-- Paste your SQL code below for Question 6
 ```
 
 **Output:**
 
-![image](https://github.com/user-attachments/assets/c430c51e-9b78-4f93-8466-421008a9ef22)
-
+![Output6](output.png)
 
 **Question 7**
 ---
-From the following tables write a SQL query to find all orders generated by New York-based salespeople. Return ord_no, purch_amt, ord_date, customer_id, salesman_id.
+-- Paste Question 7 here
 
-salesman table
-```
-name             type
----------------  ---------------
-salesman_id      numeric(5)
-name                 varchar(30)
-city                    varchar(15)
-commission       decimal(5,2)
-```
-orders table
-```
-name             type
----------------  --------
-order_no         int
-purch_amt        real
-order_date       text
-customer_id      int
-salesman_id      int
-```
-```
-SELECT o.ord_no, o.purch_amt, o.ord_date, o.customer_id, o.salesman_id
-FROM orders o
-JOIN salesman s ON o.salesman_id = s.salesman_id
-WHERE s.city = 'New York';
-
+```sql
+-- Paste your SQL code below for Question 7
 ```
 
 **Output:**
-![image](https://github.com/user-attachments/assets/2fc61d66-a2cb-4187-aae4-096d234335ec)
+
+![Output7](output.png)
 
 **Question 8**
 ---
-From the following tables, write a SQL query to find those salespeople who earned the maximum commission. Return ord_no, purch_amt, ord_date, and salesman_id.
+-- Paste Question 8 here
 
-salesman table
-```
-name             type
----------------  ---------------
-salesman_id      numeric(5)
-name                 varchar(30)
-city                    varchar(15)
-commission       decimal(5,2)
-```
-orders table
-```
-name             type
----------------  --------
-order_no         int
-purch_amt        real
-order_date       text
-customer_id      int
-salesman_id      int
-```
-```
-SELECT o.ord_no, o.purch_amt, o.ord_date, o.salesman_id
-FROM orders o
-JOIN salesman s ON o.salesman_id = s.salesman_id
-WHERE s.commission = (
-    SELECT MAX(commission)
-    FROM salesman
-);
-
+```sql
+-- Paste your SQL code below for Question 8
 ```
 
 **Output:**
 
-![image](https://github.com/user-attachments/assets/d34c06f4-4485-45aa-a1df-f7d9401eec2b)
-
+![Output8](output.png)
 
 **Question 9**
 ---
-From the following tables, write a SQL query to find all the orders generated in New York city. Return ord_no, purch_amt, ord_date, customer_id and salesman_id.
+-- Paste Question 9 here
 
-SALESMAN TABLE
-```
-name               type
------------        ----------
-salesman_id  numeric(5)
-name             varchar(30)
-city                 varchar(15)
-commission   decimal(5,2)
-```
-ORDERS TABLE
-```
-name            type
-----------      ----------
-ord_no          int
-purch_amt    real
-ord_date       text
-customer_id  int
-salesman_id  int
-```
-```
-SELECT o.ord_no, o.purch_amt, o.ord_date, o.customer_id, o.salesman_id
-FROM orders o
-JOIN salesman s ON o.salesman_id = s.salesman_id
-WHERE s.city = 'New York';
-
+```sql
+-- Paste your SQL code below for Question 9
 ```
 
 **Output:**
 
-![image](https://github.com/user-attachments/assets/52f55304-0cfd-4b75-bdb5-f6fe19e13f0b)
+![Output9](output.png)
 
 **Question 10**
 ---
-Write a SQL query that retrieves the all the columns from the Table Grades, where the grade is equal to the minimum grade achieved in each subject.
+-- Paste Question 10 here
 
-Sample table: GRADES (attributes: student_id, student_name, subject, grade)
-
-
-```
-SELECT student_id, student_name, subject, grade
-FROM Grades g
-WHERE grade = (
-    SELECT MIN(grade)
-    FROM Grades
-    WHERE subject = g.subject
-);
-
+```sql
+-- Paste your SQL code below for Question 10
 ```
 
 **Output:**
 
-![image](https://github.com/user-attachments/assets/d16e38c0-ec16-448e-b45b-fbb95ba9cba7)
-
+![Output10](output.png)
 
 
 ## RESULT
-Thus, the SQL queries to implement subqueries and views have been executed successfully.
+Thus, the SQL queries to implement different types of joins have been executed successfully.
